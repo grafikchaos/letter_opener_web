@@ -1,3 +1,4 @@
+#require_dependency "letter_opener_web/application_controller"
 # frozen_string_literal: true
 module LetterOpenerWeb
   class LettersController < ApplicationController
@@ -5,7 +6,7 @@ module LetterOpenerWeb
     before_action :load_letter, only: [:show, :attachment, :destroy]
 
     def index
-      @letters = Letter.search
+      @letters = LetterOpenerWeb::Letter.search
     end
 
     def show
@@ -25,7 +26,7 @@ module LetterOpenerWeb
     end
 
     def clear
-      Letter.destroy_all
+      LetterOpenerWeb::Letter.destroy_all
       redirect_to routes.letters_path
     end
 
@@ -41,7 +42,7 @@ module LetterOpenerWeb
     end
 
     def load_letter
-      @letter = Letter.find(params[:id])
+      @letter = LetterOpenerWeb::Letter.find(params[:id])
       head :not_found unless @letter.exists?
     end
 
